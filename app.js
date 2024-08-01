@@ -95,8 +95,14 @@ auth.onAuthStateChanged(user => {
 });
 document.addEventListener('DOMContentLoaded', () => {
     fetch('mountains.json')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
         .then(data => {
+            console.log("Data fetched successfully:", data);  // Legg til denne linjen for logging
             const tableBody = document.getElementById('mountainTable').getElementsByTagName('tbody')[0];
             data.forEach(mountain => {
                 let row = tableBody.insertRow();
@@ -113,5 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 commentsCell.textContent = mountain.comments;
             });
         })
-        .catch(error => console.error('Error fetching the mountains data:', error));
+        .catch(error => {
+            console.error('Error fetching the mountains data:', error);
+        });
 });
