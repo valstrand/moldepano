@@ -1,11 +1,12 @@
 // Initialiser Firebase
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyC70M9YYtgi0WWjzua6OAr5mX6OPktCo0I",
+  authDomain: "moldepano.firebaseapp.com",
+  projectId: "moldepano",
+  storageBucket: "moldepano.appspot.com",
+  messagingSenderId: "41942139320",
+  appId: "1:41942139320:web:bcd9c87e05b9f5f3af4f4d",
+  measurementId: "G-YDYHHCZNL9"
 };
 
 firebase.initializeApp(firebaseConfig);
