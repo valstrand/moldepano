@@ -1,17 +1,18 @@
-import { getAuth, signInWithEmailAndPassword } from firebaseauth;
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const auth = getAuth();
 
-document.getElementById('loginForm').addEventListener('submit', (e) = {
+document.getElementById('loginForm').addEventListener('submit', (e) => {
   e.preventDefault();
+
   const email = document.getElementById('loginEmail').value;
   const password = document.getElementById('loginPassword').value;
 
   signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) = {
+    .then((userCredential) => {
       window.location.href = 'index.html';
     })
-    .catch((error) = {
+    .catch((error) => {
       document.getElementById('error').innerText = error.message;
     });
 });
