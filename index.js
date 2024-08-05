@@ -1,43 +1,26 @@
-import { getAuth, signOut, onAuthStateChanged } from firebaseauth;
-import { getFirestore, doc, getDoc, collection, query, orderBy, limit, getDocs } from firebasefirestore;
+import { getAuth, signOut } from "firebase/auth";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 
 const auth = getAuth();
 const db = getFirestore();
 
-document.getElementById('logout').addEventListener('click', () = {
-  signOut(auth).then(() = {
+document.getElementById('logout').addEventListener('click', () => {
+  signOut(auth).then(() => {
     window.location.href = 'login.html';
   });
 });
 
-onAuthStateChanged(auth, (user) = {
+auth.onAuthStateChanged((user) => {
   if (user) {
-    const userId = user.uid;
-    const userRef = doc(db, 'users', userId);
-
-    getDoc(userRef).then((doc) = {
-      if (doc.exists()) {
-        const userData = doc.data();
+    const userRef = doc(db, 'users', user.uid);
+    getDoc(userRef).then((docSnap) => {
+      if (docSnap.exists()) {
+        const userData = docSnap.data();
         document.getElementById('overview').innerHTML = `
-          pVelkommen, ${userData.name}!p
-          pDu har gått ${userData.mountains.length}222 fjell.p
-          h3Dine siste 5 fjellh3
-          ul${userData.lastVisited.slice(-5).map(m = `li${m}li`).join('')}ul
+          <p>Velkommen, ${userData.name}</p>
+          <p>Du bor i ${userData.city}</p>
+          <!-- Her kan du legge til mer brukerrelatert informasjon -->
         `;
-        
-         Hent de 5 mest besøkte fjellene
-        const mountainsRef = collection(db, 'mountains');
-        const q = query(mountainsRef, orderBy('visits', 'desc'), limit(5));
-        getDocs(q).then((querySnapshot) = {
-          const popularMountains = [];
-          querySnapshot.forEach((doc) = {
-            popularMountains.push(doc.data().name);
-          });
-          document.getElementById('overview').innerHTML += `
-            h3Mest besøkte fjellh3
-            ul${popularMountains.map(m = `li${m}li`).join('')}ul
-          `;
-        });
       }
     });
   } else {
