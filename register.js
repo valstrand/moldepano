@@ -6,6 +6,7 @@ const db = getFirestore();
 
 document.getElementById('registerForm').addEventListener('submit', (e) => {
   e.preventDefault();
+
   const name = document.getElementById('name').value;
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
@@ -15,11 +16,9 @@ document.getElementById('registerForm').addEventListener('submit', (e) => {
     .then((userCredential) => {
       const user = userCredential.user;
       return setDoc(doc(db, 'users', user.uid), {
-        name: name,
-        email: email,
-        city: city,
-        mountains: [],
-        lastVisited: []
+        name,
+        email,
+        city,
       });
     })
     .then(() => {
